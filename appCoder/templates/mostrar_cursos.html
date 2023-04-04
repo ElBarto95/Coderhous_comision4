@@ -1,0 +1,11 @@
+<body>
+    {% for p in cursos %}
+    {% csrf_token %}
+        <li>{{ p }}</li>
+        <button>
+          <a href="{% url 'eliminar_curso' curso.nombre %}"> Eliminar</a>
+         </button>
+    {% endfor %}
+</body>
+
+<a class="btn btn-primary" href="{% url 'cursos' %}"> Agregar Curso </a>

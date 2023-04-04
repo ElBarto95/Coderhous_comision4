@@ -1,0 +1,19 @@
+<form action="buscar" method="GET">
+
+    <input type="number" name="camada" id="camada">
+    <input type="submit" value="Buscar" >
+
+</form>
+
+{% if curso %}
+
+    <ul>
+    {% for curso in cursos %}
+        <li> Curso de {{cursos.nombre}} con numero de comision {{cursos.comision}} </li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+
+    <p> No hay datos</p>
+{% endif %}

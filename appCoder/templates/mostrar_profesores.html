@@ -1,0 +1,9 @@
+{% for p in profesores %}
+
+    <li>{{ p }}</li>
+         <button>
+            <a href="{% url 'eliminar_profesor' profesores.nombre %}"> Eliminar</a>
+         </button>
+
+{% endfor %}
+<a class="btn btn-primary" href="{% url 'profesores' %}"> Agregar Profesor </a>
