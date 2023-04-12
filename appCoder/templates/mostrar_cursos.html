@@ -3,7 +3,7 @@
     {% csrf_token %}
         <li>{{ p }}</li>
         <button>
-          <a href="{% url 'eliminar_curso' curso.nombre %}"> Eliminar</a>
+          <a href="{% url 'eliminar_curso' p.nombre %}"> Eliminar</a>
          </button>
     {% endfor %}
 </body>
