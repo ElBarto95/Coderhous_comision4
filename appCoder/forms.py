@@ -31,3 +31,10 @@ class SignUpForm(UserCreationForm):
             'password1',
             'password2'
         ]
+
+class PosteosForm(forms.Form):
+
+    titulo=forms.CharField(max_length=30)
+    curso_concretado=forms.CharField(max_length=40)
+    resenia=forms.CharField(max_length=200)
+    #imagenes

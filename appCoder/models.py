@@ -29,9 +29,11 @@ class Profesor(models.Model):
         return f' Nombre: {self.nombre} - Apellido: {self.apellido} - Email: {self.email} - Profecion: {self.profesion}'
 
 
-class Entregable(models.Model):
+class Posteo(models.Model):
 
-    nombre=models.CharField(max_length=40)
-    fechaDentrega=models.DateField()
-    entregado=models.BooleanField()
+    titulo=models.CharField(max_length=30)
+    curso_concretado=models.CharField(max_length=40)
+    resenia=models.CharField(max_length=200)
+    #imagenes
+   
 

@@ -1,16 +1,17 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .forms import CursoForm, ProfesorForm, EstudianteForm, SignUpForm
-from .models import Curso, Profesor, Estudiante
+from .forms import CursoForm, ProfesorForm, EstudianteForm, SignUpForm, PosteosForm
+from .models import Curso, Profesor, Estudiante, Posteo
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-#from appMVT.forms import
-# Create your views here.
+# Create your views here.y
 
 def estudiantesForm(request):
 
@@ -125,9 +126,9 @@ def mostrar_cursos(request):
 
       return render(request, 'mostrar_cursos.html', context=context)
 
-def eliminar_profesor(request, profesor_nombre):
+def eliminar_profesor(request, id):
 
-      profesor = Profesor.objet.get(nombre= profesor_nombre)
+      profesor = Profesor.objects.get(id=id)
       profesor.delete()
 
       profesores = Profesor.objects.all()
@@ -135,9 +136,9 @@ def eliminar_profesor(request, profesor_nombre):
       
       return render(request, 'mostrar_profesores.html', context=context)
 
-def eliminar_curso(request, curso_nombre):
+def eliminar_curso(request, id):
 
-      curso = Curso.objet.get(nombre= curso_nombre)
+      curso = Curso.objects.get(id=id)
       curso.delete()
 
       cursos = Curso.objects.all()
@@ -152,7 +153,101 @@ class SignUpView(CreateView):
       template_name = 'registro.html'
 
 class AdminLoginView(LoginView):
+      success_url = reverse_lazy('inicio2')
       template_name= 'login.html'
 
 class AdminLogoutView(LogoutView):
       template_name= 'index.html'
+
+def editarProfesor(request, id):
+
+    # Recibe el nombre del profesor que vamos a modificar
+    profesor = Profesor.objects.get(id=id)
+
+    # Si es metodo POST hago lo mismo que el agregar
+    if request.method == 'POST':
+
+        # aquí mellega toda la información del html
+        miFormulario = ProfesorForm(request.POST)
+
+        if miFormulario.is_valid:  # Si pasó la validación de Django
+
+            informacion = miFormulario.cleaned_data
+
+            profesor.nombre = informacion['nombre']
+            profesor.apellido = informacion['apellido']
+            profesor.email = informacion['email']
+            profesor.profesion = informacion['profesion']
+
+            profesor.save()
+
+            # Vuelvo al inicio o a donde quieran
+            return render(request, "AppCoder/inicio.html")
+    # En caso que no sea post
+    else:
+        # Creo el formulario con los datos que voy a modificar
+        miFormulario = ProfesorForm(initial={'nombre': profesor.nombre, 'apellido': profesor.apellido,
+                                                   'email': profesor.email, 'profesion': profesor.profesion})
+
+    # Voy al html que me permite editar
+    return render(request, "AppCoder/editarProfesor.html", {"miFormulario": miFormulario, "profesor_nombre": profesor.nombre})
+
+def editarCurso(request, id):
+
+    # Recibe el nombre del profesor que vamos a modificar
+    profesor = Curso.objects.get(id=id)
+
+    # Si es metodo POST hago lo mismo que el agregar
+    if request.method == 'POST':
+
+        # aquí mellega toda la información del html
+        miFormulario = CursoForm(request.POST)
+
+        print(miFormulario)
+
+        if miFormulario.is_valid:
+
+            informacion = miFormulario.cleaned_data
+
+            curso.curso = informacion['curso']
+            curso.camada = informacion['camada']
+           
+            curso.save()
+            return render(request, "AppCoder/inicio.html")
+    else:
+        # Creo el formulario con los datos que voy a modificar
+        miFormulario = ProfesorForm(initial={'curso': curso.nombre, 'camada': curso.camada,
+                                                   'email': profesor.email, 'profesion': profesor.profesion})
+
+    # Voy al html que me permite editar
+    return render(request, "AppCoder/editarProfesor.html", {"miFormulario": miFormulario, "profesor_nombre": id})
+
+def posteosForm(request):
+
+      if request.method == 'POST':
+
+            form_posteo = PosteosForm(request.POST)
+
+            print(form_posteo)
+
+            if form_posteo.is_valid:
+
+                  informacion = form_posteo.cleaned_data
+
+                  post_form = Posteo (
+                        titulo=informacion['titulo'], 
+                        curso_concretado=informacion['curso_concretado'], 
+                        resenia=informacion['resenia'], 
+                        ) 
+
+                  post_form.save()
+
+                  return render (request, "index.html")
+      else:
+            form_posteo = PosteosForm()
+
+      return render(request, "posteos.html", {"form_posteo":form_posteo})
+
+class listaPosteo(ListView):
+      model = Posteo
+      context_object_name = "posteos"
