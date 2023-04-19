@@ -1,0 +1,10 @@
+{% for p in posteos %}
+
+    <li>{{ p }}</li>
+        <button>
+            <a href="{% url 'eliminar_posteo' p.id %}"> Eliminar</a>
+            <a href="{% url 'editar_posteo' p.id %}"> Editar</a>
+         </button>
+
+{% endfor %}
+<a class="btn btn-primary" href="{% url 'post' %}"> Agregar Posteo </a>

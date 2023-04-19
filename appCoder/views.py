@@ -161,16 +161,13 @@ class AdminLogoutView(LogoutView):
 
 def editarProfesor(request, id):
 
-    # Recibe el nombre del profesor que vamos a modificar
     profesor = Profesor.objects.get(id=id)
 
-    # Si es metodo POST hago lo mismo que el agregar
     if request.method == 'POST':
 
-        # aquí mellega toda la información del html
         miFormulario = ProfesorForm(request.POST)
 
-        if miFormulario.is_valid:  # Si pasó la validación de Django
+        if miFormulario.is_valid():
 
             informacion = miFormulario.cleaned_data
 
@@ -181,31 +178,23 @@ def editarProfesor(request, id):
 
             profesor.save()
 
-            # Vuelvo al inicio o a donde quieran
-            return render(request, "AppCoder/inicio.html")
-    # En caso que no sea post
+            return render(request, "index.html")
     else:
-        # Creo el formulario con los datos que voy a modificar
-        miFormulario = ProfesorForm(initial={'nombre': profesor.nombre, 'apellido': profesor.apellido,
-                                                   'email': profesor.email, 'profesion': profesor.profesion})
 
-    # Voy al html que me permite editar
-    return render(request, "AppCoder/editarProfesor.html", {"miFormulario": miFormulario, "profesor_nombre": profesor.nombre})
+        miFormulario = ProfesorForm(initial={'nombre': profesor.nombre, 'apellido': profesor.apellido,'email': profesor.email, 'profesion': profesor.profesion})
+
+    return render(request, "editarProfesor.html", {"miFormulario": miFormulario, "profesor_nombre": profesor.nombre})
 
 def editarCurso(request, id):
 
-    # Recibe el nombre del profesor que vamos a modificar
-    profesor = Curso.objects.get(id=id)
+    curso = Curso.objects.get(id=id)
 
-    # Si es metodo POST hago lo mismo que el agregar
     if request.method == 'POST':
 
-        # aquí mellega toda la información del html
+       
         miFormulario = CursoForm(request.POST)
 
-        print(miFormulario)
-
-        if miFormulario.is_valid:
+        if miFormulario.is_valid():
 
             informacion = miFormulario.cleaned_data
 
@@ -213,14 +202,13 @@ def editarCurso(request, id):
             curso.camada = informacion['camada']
            
             curso.save()
-            return render(request, "AppCoder/inicio.html")
+            return render(request, "index.html")
     else:
         # Creo el formulario con los datos que voy a modificar
-        miFormulario = ProfesorForm(initial={'curso': curso.nombre, 'camada': curso.camada,
-                                                   'email': profesor.email, 'profesion': profesor.profesion})
+        miFormulario = CursoForm(initial={'curso': curso.nombre, 'camada': curso.camada,})
 
-    # Voy al html que me permite editar
-    return render(request, "AppCoder/editarProfesor.html", {"miFormulario": miFormulario, "profesor_nombre": id})
+   
+    return render(request, "editarCurso.html", {"miFormulario": miFormulario, "curso_nombre": id})
 
 def posteosForm(request):
 
@@ -248,6 +236,46 @@ def posteosForm(request):
 
       return render(request, "posteos.html", {"form_posteo":form_posteo})
 
-class listaPosteo(ListView):
-      model = Posteo
-      context_object_name = "posteos"
+def mostrar_posteos(request):
+
+      posteos= Posteo.objects.all()
+
+      context = {'posteos': posteos} 
+
+      return render(request, 'mostrar_posteos.html', context=context)
+
+def eliminar_posteo(request, id):
+
+      posteo = Posteo.objects.get(id=id)
+      posteo.delete()
+
+      posteos = Posteo.objects.all()
+      context = {'posteos': posteos} 
+      
+      return render(request, 'mostrar_posteos.html', context=context)
+
+def editarPosteo(request, id):
+
+    posteos = Posteo.objects.get(id=id)
+
+    if request.method == 'POST':
+
+        miFormulario = PosteosForm(request.POST)
+
+        if miFormulario.is_valid():
+
+            informacion = miFormulario.cleaned_data
+
+            posteos.titulo = informacion['titulo']
+            posteos.curso_concretado = informacion['curso_concretado']
+            posteos.resenia = informacion['resenia']
+
+           
+            posteos.save()
+            return render(request, "index.html")
+    else:
+
+        miFormulario = PosteosForm(initial={'titulo': posteos.titulo, 'curso_concretado': posteos.curso_concretado,})
+
+   
+    return render(request, "editarPosteo.html", {"miFormulario": miFormulario, "posteo_titulo": id})
