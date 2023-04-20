@@ -34,6 +34,8 @@ class Posteo(models.Model):
     titulo=models.CharField(max_length=30)
     curso_concretado=models.CharField(max_length=40)
     resenia=models.CharField(max_length=200)
+    
     #imagenes
-   
+    def __str__(self) -> str:
+        return f' Titulo: {self.titulo} - curso_concretado: {self.curso_concretado} - resenia: {self.resenia}'
 

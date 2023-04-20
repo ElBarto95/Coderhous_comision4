@@ -5,11 +5,11 @@
 
 </form>
 
-{% if curso %}
+{% if cursos %}
 
     <ul>
-    {% for curso in cursos %}
-        <li> Curso de {{curso.nombre}} con numero de comision {{curso.comision}} </li>
+    {% for cursos in cursos %}
+        <li> Curso de {{cursos.nombre}} con numero de comision {{cursos.camada}} </li>
     {% endfor %}
     </ul>
 

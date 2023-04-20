@@ -98,10 +98,10 @@ def inicio2(request):
 
 def buscarCamada(request):
 
-      if request.GET.get('comision', False):
+      if request.GET.get('camada', False):
 
-            comision = request.GET['comision']
-            cursos = Curso.objects.filter(comision__icontains=comision)
+            camada = request.GET['camada']
+            cursos = Curso.objects.filter(camada__icontains=camada)
 
             return render(request, 'buscarCamada.html', {'cursos': cursos})
 
