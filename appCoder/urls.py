@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import eliminar_posteo, editarPosteo, mostrar_posteos, posteosForm, editarProfesor, editarCurso, inicio2, AdminLogoutView,AdminLoginView, eliminar_profesor, mostrar_cursos,mostrar_profesores, buscarCamada, inicio, profesoresForm, estudiantesForm, cursoForm, eliminar_curso, SignUpView
-
+from .views import editarPerfil, eliminar_posteo, editarPosteo, mostrar_posteos, posteosForm, editarProfesor, editarCurso, inicio2, AdminLogoutView,AdminLoginView, eliminar_profesor, mostrar_cursos,mostrar_profesores, buscarCamada, inicio, profesoresForm, estudiantesForm, cursoForm, eliminar_curso, SignUpView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns= [
     path('cursos/', cursoForm, name='cursos' ),
@@ -21,5 +22,8 @@ urlpatterns= [
     path('posteos/', posteosForm, name='post'),
     path('listaposteos/', mostrar_posteos, name='lista_post'),
     path('eliminar_post/ <int:id>', eliminar_posteo, name='eliminar_posteo'),
-    path('editar_post/ <int:id>', editarPosteo, name='editar_posteo')
-    ]
+    path('editar_post/ <int:id>', editarPosteo, name='editar_posteo'),
+    path('editarPerfil', editarPerfil, name='editarPerfil')
+]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

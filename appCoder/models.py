@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Curso(models.Model):
@@ -34,8 +35,16 @@ class Posteo(models.Model):
     titulo=models.CharField(max_length=30)
     curso_concretado=models.CharField(max_length=40)
     resenia=models.CharField(max_length=200)
-    
-    #imagenes
-    def __str__(self) -> str:
-        return f' Titulo: {self.titulo} - curso_concretado: {self.curso_concretado} - resenia: {self.resenia}'
+    imagen = models.ImageField(upload_to="posts", null=True, blank=True)
 
+    def __str__(self) -> str:
+        return f' Titulo: {self.titulo} - curso_concretado: {self.curso_concretado} - resenia: {self.resenia} - imagen: {self.imagen}'
+
+class UsuarioImagen(models.Model):
+   
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    imagen = models.ImageField(upload_to='usuarioImagen', null=True, blank = True)
+ 
+    def __str__(self):
+        return f"{self.user} - {self.imagen}"

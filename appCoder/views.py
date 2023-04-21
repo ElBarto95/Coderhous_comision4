@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .forms import CursoForm, ProfesorForm, EstudianteForm, SignUpForm, PosteosForm
-from .models import Curso, Profesor, Estudiante, Posteo
+from .forms import CursoForm, ProfesorForm, EstudianteForm, SignUpForm, PosteosForm, UserEditForm
+from .models import Curso, Profesor, Estudiante, Posteo, UsuarioImagen
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -226,6 +226,7 @@ def posteosForm(request):
                         titulo=informacion['titulo'], 
                         curso_concretado=informacion['curso_concretado'], 
                         resenia=informacion['resenia'], 
+                        imagen = informacion['imagen']
                         ) 
 
                   post_form.save()
@@ -279,3 +280,29 @@ def editarPosteo(request, id):
 
    
     return render(request, "editarPosteo.html", {"miFormulario": miFormulario, "posteo_titulo": id})
+
+def editarPerfil(request):
+
+    usuario = request.user
+
+    if request.method == 'POST':
+
+        miFormulario = UserEditForm(request.POST)
+
+        if miFormulario.is_valid():
+
+            informacion = miFormulario.cleaned_data
+
+            usuario.email = informacion['email']
+            usuario.password1 = informacion['password1']
+            usuario.password2 = informacion['password2']
+
+            usuario.save()
+
+            return render(request, "index2.html")
+
+    else:
+
+        miFormulario = UserEditForm(initial={'email': usuario.email})
+
+    return render(request, "editarPerfil.html", {"miFormulario": miFormulario, "usuario": usuario})

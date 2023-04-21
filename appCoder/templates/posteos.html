@@ -8,15 +8,17 @@
 </head>
 <body>
     
-    <form action="" method= "POST"> {% csrf_token %}
+    <form action="" method= "POST" enctype="multipart/form-data">
+         {% csrf_token %}
 
         <table>
 
             {{ form_posteo.as_table }}
+            
 
         </table>
-        
-        <input type="submit", value="Enviar">
+        <input type="file" name="txtImagen" id="txtImagen">
+        <input type="submit", value="Guardar">
 
     </form>
 

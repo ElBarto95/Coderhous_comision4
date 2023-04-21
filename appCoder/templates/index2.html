@@ -20,14 +20,18 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-                <a class="btn btn-primary" href="{% url 'estudiantes' %}">Carga de estudiante </a>
                 <a class="btn btn-primary" href="{% url 'buscarCamada' %}">Buscar Curso</a>
                 <a class="btn btn-primary" href="{% url 'mostrar_profesores' %}"> Lista de profesores </a>
                 <a class="btn btn-primary" href="{% url 'mostrar_cursos' %}"> Lista de cursos </a>
+                <a class="btn btn-primary" href="{% url 'editarPerfil' %}"> Editar perfil </a>
                 <a class="btn btn-primary" href="{% url 'post' %}"> Postear tu experiencia </a>
                 <a class="btn btn-primary" href="{% url 'Logout' %}"> Logout </a>
+                <a class="btn btn-primary" href="{% url 'Logout' %}"> Logout </a>
+               <!-- <img src="{{(UsuarioImagen.objects.filter(user=request.user.id))}}">
+                <p> class="text-muted small mb-4 mb-lg-0"> Hola, {{user.username}}</p>-->
 
             </div>
+            
         </nav>
         <!-- Masthead-->
         <header class="masthead">
