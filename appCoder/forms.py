@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm
 from .models import Posteo
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -44,13 +45,8 @@ class UserEditForm(UserCreationForm):
         fields = ['email', 'password1', 'password2']
 
 
-class PosteosForm(forms.Form):
+class PosteosForm(ModelForm):
 
-    titulo=forms.CharField(max_length=30)
-    curso_concretado=forms.CharField(max_length=40)
-    resenia=forms.CharField(max_length=200)
-
-    
     class Meta:
         model = Posteo
-        fields = ['titulo', 'curso_concretado', 'resenia', 'imagen']
+        fields = "__all__"

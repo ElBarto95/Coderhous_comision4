@@ -1,12 +1,21 @@
+{% extends "index.html" %}
+
+{%load static %}
+
+{% block codigoDinamico %}
+
 <body>
     {% for p in cursos %}
     {% csrf_token %}
         <li>{{ p }}</li>
         <button>
+          {% if user.is_authenticated %}
           <a href="{% url 'eliminar_curso' p.id %}"> Eliminar</a>
           <a href="{% url 'EditarCurso' p.id %}"> Editar</a>
+          {% endif %}
          </button>
     {% endfor %}
 </body>
 
 <a class="btn btn-primary" href="{% url 'cursos' %}"> Agregar Curso </a>
+{% endblock %}

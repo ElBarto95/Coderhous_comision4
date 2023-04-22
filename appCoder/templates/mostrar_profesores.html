@@ -1,3 +1,9 @@
+{% extends "index.html" %}
+
+{%load static %}
+
+{% block codigoDinamico %}
+
 {% for p in profesores %}
 
     <li>{{ p }}</li>
@@ -8,3 +14,4 @@
 
 {% endfor %}
 <a class="btn btn-primary" href="{% url 'profesores' %}"> Agregar Profesor </a>
+{% endblock %}

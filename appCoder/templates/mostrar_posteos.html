@@ -1,10 +1,22 @@
-{% for p in posteos %}
+{% extends "index.html" %}
+<head>
+    {%load static %}
+</head>
+{% block codigoDinamico %}
+    {% for p in posteos %}
+    <li><h1> Titulo: {{ p.titulo }}</h1></li>
+        <li> Curso: {{ p.curso_concretado }}</li>
+        <li> Opinion: {{ p.resenia }}</li>
 
-    <li>{{ p }}</li>
+         {% if p.imagen %}
+         <li><img src="{{ p.imagen.url }}" alt="Imagen" style="width: 200px"></li>
+        {% endif%}
+
         <button>
             <a href="{% url 'eliminar_posteo' p.id %}"> Eliminar</a>
             <a href="{% url 'editar_posteo' p.id %}"> Editar</a>
          </button>
 
-{% endfor %}
-<a class="btn btn-primary" href="{% url 'post' %}"> Agregar Posteo </a>
+    {% endfor %}
+    <h1>Compartenos tu experiencia con los cursos  <a href="{% url 'post' %}"> Agregar Posteo </a></h1>
+{% endblock %}

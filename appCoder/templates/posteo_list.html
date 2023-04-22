@@ -1,6 +1,13 @@
+{% extends "index2.html" %}
+
+{%load static %}
+
+{% block codigoDinamico %}
 
 {% for p in objet_list %}
 
     <li>{{ p }}</li>
 
 {% endfor %}
+
+{% block codigoDinamico %}

@@ -16,6 +16,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'appCoder/css/styles.css' %}" rel="stylesheet" />
     </head>
+    
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
@@ -24,44 +25,17 @@
                 <a class="btn btn-primary" href="{% url 'mostrar_profesores' %}"> Lista de profesores </a>
                 <a class="btn btn-primary" href="{% url 'mostrar_cursos' %}"> Lista de cursos </a>
                 <a class="btn btn-primary" href="{% url 'lista_post' %}"> Opiniones de estudiiantes </a>
-                <a class="btn btn-primary" href="{% url 'Login' %}"> Login </a>
-                <a class="btn btn-primary" href="{% url 'SignUpView' %}"> SignUp </a>
+                <a class="btn btn-secondary" href="{% url 'Login' %}"> Login </a>
+                <a class="btn btn-secondary" href="{% url 'SignUpView' %}"> SignUp </a>
 
             </div>
+        
         </nav>
+        {% block codigoDinamico %}
         <!-- Masthead-->
         <header class="masthead">
             <div class="container position-relative">
-                <div class="row justify-content-center">
-                    <div class="col-xl-6">
-                        <div class="text-center text-white">
-                            <!-- Page heading-->
-                            <h1 class="mb-5">Busqueda de cursos</h1>
-                            <!-- Signup form-->
-                            <!-- * * * * * * * * * * * * * * *-->
-                            <!-- * * SB Forms Contact Form * *-->
-                            <!-- * * * * * * * * * * * * * * *-->
-                            <!-- This form is pre-integrated with SB Forms.-->
-                            <!-- To make this form functional, sign up at-->
-                            <!-- https://startbootstrap.com/solution/contact-forms-->
-                            <!-- to get an API token!-->
-                            <form class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
-                                <!-- Email address input-->
-                                <div class="row">
-                                    <div class="col">
-                                        <input class="form-control form-control-lg" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required,email" />
-                                        <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:required">Email Address is required.</div>
-                                        <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div>
-                                    </div>
-                                    <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="Buscar">Buscar</button></div>
-                                </div>
-                                <!-- Submit success message-->
-                                <!---->
-                                <!-- This is what your users will see when the form-->
-                                <!-- has successfully submitted-->
-                            </form>
-                        </div>
-                    </div>
+                <div class="row justify-content-center">  
                 </div>
             </div>
         </header>
@@ -108,4 +82,5 @@
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
+    {% endblock %}
 </html>
