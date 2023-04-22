@@ -309,3 +309,6 @@ def editarPerfil(request):
         miFormulario = UserEditForm(initial={'email': usuario.email})
 
     return render(request, "editarPerfil.html", {"miFormulario": miFormulario, "usuario": usuario})
+
+def about(request):
+     return render(request, 'about.html')
