@@ -226,7 +226,8 @@ def posteosForm(request):
                         titulo=informacion['titulo'], 
                         curso_concretado=informacion['curso_concretado'], 
                         resenia=informacion['resenia'], 
-                        imagen = informacion['imagen']
+                        imagen = informacion['imagen'],
+                        fecha_post = informacion['fecha_post']
                         ) 
 
                   post_form.save()
@@ -245,7 +246,6 @@ def mostrar_posteos(request):
 
       return render(request, 'mostrar_posteos.html', context=context)
 
-@login_required
 def eliminar_posteo(request, id):
 
       posteo = Posteo.objects.get(id=id)
@@ -256,7 +256,6 @@ def eliminar_posteo(request, id):
       
       return render(request, 'mostrar_posteos.html', context=context)
 
-@login_required
 def editarPosteo(request, id):
 
     posteos = Posteo.objects.get(id=id)
@@ -283,14 +282,13 @@ def editarPosteo(request, id):
    
     return render(request, "editarPosteo.html", {"miFormulario": miFormulario, "posteo_titulo": id})
 
-@login_required
 def editarPerfil(request):
 
     usuario = request.user
 
     if request.method == 'POST':
 
-        miFormulario = UserEditForm(request.POST)
+        miFormulario = UserEditForm(request.POST, request.FILES)
 
         if miFormulario.is_valid():
 

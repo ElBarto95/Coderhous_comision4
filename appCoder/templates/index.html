@@ -21,14 +21,19 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
+                <a class="btn btn-primary" href="{% url 'inicio' %}">Inicio</a>
                 <a class="btn btn-primary" href="{% url 'buscarCamada' %}">Buscar Curso</a>
                 <a class="btn btn-primary" href="{% url 'mostrar_profesores' %}"> Lista de profesores </a>
                 <a class="btn btn-primary" href="{% url 'mostrar_cursos' %}"> Lista de cursos </a>
                 <a class="btn btn-primary" href="{% url 'lista_post' %}"> Opiniones de estudiiantes </a>
-                <a class="btn btn-secondary" href="{% url 'Login' %}"> Login </a>
-                <a class="btn btn-secondary" href="{% url 'SignUpView' %}"> SignUp </a>
-                <a class="btn btn-secondary" href="{% url 'about' %}"> about </a>
-
+                {% if user.is_authenticated == False %}
+                    <a class="btn btn-secondary" href="{% url 'Login' %}"> Login </a>
+                    <a class="btn btn-secondary" href="{% url 'SignUpView' %}"> SignUp </a>
+                    <a class="btn btn-secondary" href="{% url 'about' %}"> about </a>
+                {% endif %}
+                {% if user.is_authenticated%}
+                <a class="btn btn-secondary" href="{% url 'Logout' %}"> Logout </a>
+                {% endif %}
             </div>
         
         </nav>

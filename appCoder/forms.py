@@ -39,10 +39,11 @@ class UserEditForm(UserCreationForm):
     email = forms.EmailField(label="Ingrese su email:")
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir la contraseña', widget=forms.PasswordInput)
-
+    avatar = forms.ImageField(required=False)
+    
     class Meta:
         model = User
-        fields = ['email', 'password1', 'password2']
+        fields = ['email', 'password1', 'password2', 'avatar']
 
 
 class PosteosForm(ModelForm):
