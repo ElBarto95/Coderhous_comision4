@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .forms import CursoForm, ProfesorForm, EstudianteForm, SignUpForm, PosteosForm, UserEditForm
-from .models import Curso, Profesor, Estudiante, Posteo, UsuarioImagen
+from .forms import CursoForm, ProfesorForm, EstudianteForm, SignUpForm, PosteosForm, UserEditForm, ProfileForm
+from .models import Curso, Mensaje, Profesor, Estudiante, Posteo, UsuarioImagen
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -10,8 +10,6 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.y
 
 def estudiantesForm(request):
 
@@ -308,5 +306,36 @@ def editarPerfil(request):
 
     return render(request, "editarPerfil.html", {"miFormulario": miFormulario, "usuario": usuario})
 
+def edit_profile(request):
+    
+    profile = request.user
+
+    if request.method == 'POST':
+        
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('index2.html')    
+        
+    else:
+        form = ProfileForm()
+    return render(request, 'edit_profile.html', {'form': form})
+
 def about(request):
      return render(request, 'about.html')
+
+class MensajeCreate(CreateView):
+    model = Mensaje
+    fields = '__all__'
+    success_url = reverse_lazy("inicio2")
+
+class MensajeList(ListView):
+    model = Mensaje
+    context_object_name = "mensajes"
+
+    def get_queryset(self):
+        return Mensaje.objects.filter(destinatario=self.request.user.id).all()
+
+class MensajeDelete(DeleteView):
+    model=Mensaje
+    success_url = reverse_lazy("mensaje-list")

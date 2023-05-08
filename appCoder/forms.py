@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Posteo
+from .models import Posteo, Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -39,11 +39,10 @@ class UserEditForm(UserCreationForm):
     email = forms.EmailField(label="Ingrese su email:")
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir la contraseña', widget=forms.PasswordInput)
-    avatar = forms.ImageField(required=False)
     
     class Meta:
         model = User
-        fields = ['email', 'password1', 'password2', 'avatar']
+        fields = ['email', 'password1', 'password2',]
 
 
 class PosteosForm(ModelForm):
@@ -51,3 +50,10 @@ class PosteosForm(ModelForm):
     class Meta:
         model = Posteo
         fields = "__all__"
+
+class ProfileForm(forms.ModelForm):
+    
+    class Meta:
+        model = Profile
+        fields = ['image']
+        widgets = {'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'})}

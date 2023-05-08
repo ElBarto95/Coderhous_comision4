@@ -43,9 +43,18 @@ class Posteo(models.Model):
     def __str__(self) -> str:
         return f' Titulo: {self.titulo} - curso_concretado: {self.curso_concretado} - resenia: {self.resenia} - imagen: {self.imagen} - fecha_post: {self.fecha_post}'
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='profile_images', blank=True, null=True)
+
 class UsuarioImagen(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to='usuarioImagen', null=True, blank = True)
  
     def __str__(self):
         return f"{self.user} - {self.imagen}"
+
+class Mensaje(models.Model):
+    mensaje= models.TextField(max_length=1000)
+    email = models.EmailField()
+    destinatario = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="destinatario")
