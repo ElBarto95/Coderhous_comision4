@@ -6,7 +6,7 @@
 
     <h1>Formulario - Editar Perfil</h1>
     <h1>Usuario: {{user}}</h1>
-    <img src="{{ request.user.profile.image.url }}" alt="Imagen de perfil">
+    <img src="{{ request.user.profile.image.url }}" alt="Imagen de perfil" style="width: 200px">
     <form action="" method="POST">{% csrf_token %}
 
         <table>

@@ -209,6 +209,7 @@ def editarCurso(request, id):
    
     return render(request, "editarCurso.html", {"miFormulario": miFormulario, "curso_nombre": id})
 
+@login_required
 def posteosForm(request):
 
       if request.method == 'POST':
@@ -226,6 +227,7 @@ def posteosForm(request):
                         curso_concretado=informacion['curso_concretado'],
                         resenia=informacion['resenia'],
                         imagen = informacion['imagen'],
+                        publisher=request.user
                         )
 
                   post_form.save()
@@ -336,10 +338,13 @@ class MensajeCreate(CreateView):
 class MensajeList(ListView):
     model = Mensaje
     context_object_name = "mensajes"
+    template_name = 'mensaje_list.html'
 
     def get_queryset(self):
         return Mensaje.objects.filter(destinatario=self.request.user.id).all()
 
 class MensajeDelete(DeleteView):
     model = Mensaje
-    
+    success_url = reverse_lazy("inicio")
+    template_name= 'mensaje_confirm_deleted.html'
+
