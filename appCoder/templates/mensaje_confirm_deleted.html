@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+
+{%load static %}
+
+{% block codigoDinamico %}
+
+<h1> Estas seguro que deceas eliminar este mensaje ? {{object.id}}</h1>
+
+<form method="POST">{% csrf_token %}
+
+        {{ form }}
+
+    <input type="submit", value="Borrar">
+
+</form>
+
+{% endblock %}

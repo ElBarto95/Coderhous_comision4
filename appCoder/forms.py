@@ -49,7 +49,7 @@ class PosteosForm(ModelForm):
 
     class Meta:
         model = Posteo
-        fields = "__all__"
+        fields = ['titulo', 'curso_concretado', 'resenia', 'imagen']
 
 class ProfileForm(forms.ModelForm):
     

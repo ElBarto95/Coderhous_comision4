@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{%load static %}
+
+{% block codigoDinamico %}
+
+    {% if not mensajes %}
+        <h1>No tiene mensajes</h1>
+    {% endif %}
+
+
+    {% for p in mensajes %}
+
+    <li>
+        {{ mensaje.email }}
+
+        {{ p.mensaje }}
+
+        {% if p.destinatario == user %}
+         <button>
+            <a href="{% url 'eliminar_mensaje' p.id %}"> Borrar</a>
+         </button>
+         {% endif%}
+    </li>
+{% endfor %}
+{% endblock %}

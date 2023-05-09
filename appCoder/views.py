@@ -90,6 +90,7 @@ def inicio(request):
 
       return render(request, "index.html")
 
+@login_required
 def inicio2(request):
 
       return render(request, "index2.html")
@@ -221,16 +222,15 @@ def posteosForm(request):
                   informacion = form_posteo.cleaned_data
 
                   post_form = Posteo (
-                        titulo=informacion['titulo'], 
-                        curso_concretado=informacion['curso_concretado'], 
-                        resenia=informacion['resenia'], 
+                        titulo=informacion['titulo'],
+                        curso_concretado=informacion['curso_concretado'],
+                        resenia=informacion['resenia'],
                         imagen = informacion['imagen'],
-                        fecha_post = informacion['fecha_post']
-                        ) 
+                        )
 
                   post_form.save()
 
-                  return render (request, "index.html")
+                  return render (request, "index2.html")
       else:
             form_posteo = PosteosForm()
 
@@ -240,20 +240,22 @@ def mostrar_posteos(request):
 
       posteos= Posteo.objects.all()
 
-      context = {'posteos': posteos} 
+      context = {'posteos': posteos}
 
       return render(request, 'mostrar_posteos.html', context=context)
 
+@login_required
 def eliminar_posteo(request, id):
 
       posteo = Posteo.objects.get(id=id)
       posteo.delete()
 
       posteos = Posteo.objects.all()
-      context = {'posteos': posteos} 
+      context = {'posteos': posteos}
       
       return render(request, 'mostrar_posteos.html', context=context)
 
+@login_required
 def editarPosteo(request, id):
 
     posteos = Posteo.objects.get(id=id)
@@ -280,6 +282,7 @@ def editarPosteo(request, id):
    
     return render(request, "editarPosteo.html", {"miFormulario": miFormulario, "posteo_titulo": id})
 
+@login_required
 def editarPerfil(request):
 
     usuario = request.user
@@ -306,20 +309,20 @@ def editarPerfil(request):
 
     return render(request, "editarPerfil.html", {"miFormulario": miFormulario, "usuario": usuario})
 
+@login_required
 def edit_profile(request):
-    
-    profile = request.user
+    profile = request.user.profile if hasattr(request.user, 'profile') else None
 
     if request.method == 'POST':
-        
-        form = ProfileForm(request.POST, request.FILES)
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            form.save()
-            return redirect('index2.html')    
-        
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return redirect('inicio2')    
     else:
-        form = ProfileForm()
-    return render(request, 'edit_profile.html', {'form': form})
+        form = ProfileForm(instance=profile)
+    return render(request, 'agreg_imag_perf.html', {'form': form})
 
 def about(request):
      return render(request, 'about.html')
@@ -327,7 +330,8 @@ def about(request):
 class MensajeCreate(CreateView):
     model = Mensaje
     fields = '__all__'
-    success_url = reverse_lazy("inicio2")
+    success_url = reverse_lazy("inicio")
+    template_name = 'mensaje_form.html'
 
 class MensajeList(ListView):
     model = Mensaje
@@ -337,5 +341,5 @@ class MensajeList(ListView):
         return Mensaje.objects.filter(destinatario=self.request.user.id).all()
 
 class MensajeDelete(DeleteView):
-    model=Mensaje
-    success_url = reverse_lazy("mensaje-list")
+    model = Mensaje
+    

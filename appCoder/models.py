@@ -38,10 +38,10 @@ class Posteo(models.Model):
     resenia=models.CharField(max_length=200)
     imagen = models.ImageField(upload_to="posts", null=True, blank=True)
     publisher = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="publisher")
-    fecha_post = models.DateField(auto_now_add= True)
+    fecha_post = models.DateTimeField(auto_now_add= True)
 
     def __str__(self) -> str:
-        return f' Titulo: {self.titulo} - curso_concretado: {self.curso_concretado} - resenia: {self.resenia} - imagen: {self.imagen} - fecha_post: {self.fecha_post}'
+        return f' Titulo: {self.titulo} - curso_concretado: {self.curso_concretado} - resenia: {self.resenia} - imagen: {self.imagen}'
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

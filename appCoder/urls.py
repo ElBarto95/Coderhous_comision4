@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import about,editarPerfil, edit_profile, eliminar_posteo, editarPosteo, mostrar_posteos, posteosForm, editarProfesor, editarCurso, inicio2, AdminLogoutView,AdminLoginView, eliminar_profesor, mostrar_cursos,mostrar_profesores, buscarCamada, inicio, profesoresForm, estudiantesForm, cursoForm, eliminar_curso, SignUpView
+from .views import about, editarPerfil, MensajeList, MensajeDelete, MensajeCreate, edit_profile, eliminar_posteo, editarPosteo, mostrar_posteos, posteosForm, editarProfesor, editarCurso, inicio2, AdminLogoutView,AdminLoginView, eliminar_profesor, mostrar_cursos,mostrar_profesores, buscarCamada, inicio, profesoresForm, estudiantesForm, cursoForm, eliminar_curso, SignUpView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,6 +25,9 @@ urlpatterns= [
     path('editar_post/ <int:id>', editarPosteo, name='editar_posteo'),
     path('editarPerfil/', editarPerfil, name='editarPerfil'),
     path('edit_profile/', edit_profile, name='edit_profile'),
+    path('mensaje/pk/create', MensajeCreate.as_view(), name='enviar_mensaje'),
+    path('mensaje/list', MensajeList.as_view(), name='mensaje-list'),
+    path('mensaje/pk/deleted', MensajeDelete.as_view(), name='eliminar_mensaje'),
     path('about/', about, name='about')
 ]
 
