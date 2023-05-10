@@ -37,6 +37,7 @@ def estudiantesForm(request):
 
       return render(request, "estudiante.html", {"form_estudiante":form_estudiante})
 
+@login_required
 def profesoresForm(request):
 
       if request.method == 'POST':
@@ -64,6 +65,7 @@ def profesoresForm(request):
 
       return render(request, "profesor.html", {"form_profesor":form_profesor})
 
+@login_required
 def cursoForm(request):
 
       if request.method == 'POST':
@@ -125,6 +127,7 @@ def mostrar_cursos(request):
 
       return render(request, 'mostrar_cursos.html', context=context)
 
+@login_required
 def eliminar_profesor(request, id):
 
       profesor = Profesor.objects.get(id=id)
@@ -135,6 +138,7 @@ def eliminar_profesor(request, id):
       
       return render(request, 'mostrar_profesores.html', context=context)
 
+@login_required
 def eliminar_curso(request, id):
 
       curso = Curso.objects.get(id=id)
@@ -155,9 +159,11 @@ class AdminLoginView(LoginView):
       success_url = reverse_lazy('inicio2')
       template_name= 'login.html'
 
+
 class AdminLogoutView(LogoutView):
       template_name= 'index.html'
 
+@login_required
 def editarProfesor(request, id):
 
     profesor = Profesor.objects.get(id=id)
@@ -184,6 +190,7 @@ def editarProfesor(request, id):
 
     return render(request, "editarProfesor.html", {"miFormulario": miFormulario, "profesor_nombre": profesor.nombre})
 
+@login_required
 def editarCurso(request, id):
 
     curso = Curso.objects.get(id=id)
@@ -345,6 +352,5 @@ class MensajeList(ListView):
 
 class MensajeDelete(DeleteView):
     model = Mensaje
-    success_url = reverse_lazy("inicio")
+    success_url = reverse_lazy("mensaje-list")
     template_name= 'mensaje_confirm_deleted.html'
-

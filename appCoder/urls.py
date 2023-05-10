@@ -27,7 +27,7 @@ urlpatterns= [
     path('edit_profile/', edit_profile, name='edit_profile'),
     path('mensaje/pk/create', MensajeCreate.as_view(), name='enviar_mensaje'),
     path('mensaje/list', MensajeList.as_view(), name='mensaje-list'),
-    path('mensaje/pk/deleted', MensajeDelete.as_view(), name='eliminar_mensaje'),
+    path('mensaje/<int:pk>/deleted', MensajeDelete.as_view(), name='eliminar_mensaje'),
     path('about/', about, name='about')
 ]
 
